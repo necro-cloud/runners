@@ -19,7 +19,7 @@ REG_TOKEN=$(curl -L \
 
 # Register the runner.
 cd /home/docker/actions-runner
-./config.sh --unattended --url https://github.com/${GH_ORG} --token ${REG_TOKEN} --name ${RUNNER_NAME} --labels photoatom
+./config.sh --unattended --url https://github.com/${GH_ORG} --token ${REG_TOKEN} --name ${RUNNER_NAME} --labels "${GH_LABELS}"
 
 # Function for cleaning up the runner.
 cleanup() {
