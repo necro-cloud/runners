@@ -65,7 +65,7 @@ RUN curl https://dl.min.io/client/mc/release/linux-amd64/mc \
   chmod +x /usr/local/bin/mc
 
 # Installing GH CLI
-RUN (type -p wget >/dev/null || (apt update && sudo apt-get install wget -y)) \
+RUN (type -p wget >/dev/null || (apt update && apt-get install wget -y)) \
   && mkdir -p -m 755 /etc/apt/keyrings \
   && out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
   && cat $out | tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
