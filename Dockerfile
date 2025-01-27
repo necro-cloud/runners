@@ -21,6 +21,7 @@ RUN apt update -y && \
 # Install required packages
 RUN apt install -y --no-install-recommends \
   curl \
+  nodejs \
   wget \
   zip \
   unzip \
