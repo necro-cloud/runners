@@ -33,6 +33,7 @@ RUN apt install -y --no-install-recommends \
   build-essential \
   libssl-dev \
   libffi-dev \
+  libicu-dev \
   apt-transport-https \
   ca-certificates \
   gnupg 
