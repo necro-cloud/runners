@@ -35,6 +35,8 @@ RUN apt install -y --no-install-recommends \
 
 # Installing NodeJS
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash && \
+  export NVM_DIR="$HOME/.nvm" && \
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && \
   nvm install 23
 
 # Installing kubectl
