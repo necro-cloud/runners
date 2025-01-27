@@ -1,5 +1,5 @@
 # Base image for the runner
-FROM ubuntu:24.04
+FROM ubuntu:24.10
 
 # Runner version to be used.
 ARG RUNNER_VERSION="2.322.0"
@@ -21,7 +21,6 @@ RUN apt update -y && \
 # Install required packages
 RUN apt install -y --no-install-recommends \
   curl \
-  nodejs \
   wget \
   zip \
   unzip \
@@ -33,6 +32,10 @@ RUN apt install -y --no-install-recommends \
   apt-transport-https \
   ca-certificates \
   gnupg 
+
+# Installing NodeJS
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash && \
+  nvm install 23
 
 # Installing kubectl
 RUN curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
