@@ -38,7 +38,8 @@ RUN apt install -y --no-install-recommends \
   gnupg 
 
 # Installing NodeJS
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash && \
+RUN mkdir -p ${NVM_DIR} && \
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash && \
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && \
   nvm install 23.6.1
 
