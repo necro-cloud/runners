@@ -1,14 +1,21 @@
 # Base image for the runner
-FROM ubuntu:24.04
+FROM ubuntu:24.10
 
 # Runner version to be used.
-ARG RUNNER_VERSION="2.321.0"
+ARG RUNNER_VERSION="2.322.0"
 
 # Accept default answers for all commands
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Required Environment variables
-ENV GH_ORG="photoatom"
+ENV GH_ORG=""
+ENV GH_RUNNER_NAME_PATTERN=""
+ENV GH_TOKEN=""
+ENV GH_LABELS=""
+
+# NVM Variables
+ENV NVM_DIR /usr/local/nvim
+ENV NODE_VERSION v23.6.1
 
 # Update and upgrade repositories and create user docker
 RUN apt update -y && \
@@ -18,7 +25,6 @@ RUN apt update -y && \
 # Install required packages
 RUN apt install -y --no-install-recommends \
   curl \
-  nodejs \
   wget \
   zip \
   unzip \
@@ -27,22 +33,32 @@ RUN apt install -y --no-install-recommends \
   build-essential \
   libssl-dev \
   libffi-dev \
+  libicu-dev \
   apt-transport-https \
   ca-certificates \
-  gnupg \
-  openjdk-21-jdk
+  gnupg 
+
+# Installing NodeJS
+RUN mkdir -p ${NVM_DIR} && \
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash && \
+  /bin/bash -c "source $NVM_DIR/nvm.sh && nvm install $NODE_VERSION && nvm use --delete-prefix $NODE_VERSION"
+
+ENV NODE_PATH $NVM_DIR/versions/node/${NODE_VERSION}/bin
+ENV PATH      $NODE_PATH:$PATH
+
+RUN node --version
 
 # Installing kubectl
-RUN curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
+RUN curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
   chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
-  echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /' | tee /etc/apt/sources.list.d/kubernetes.list && \
+  echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | tee /etc/apt/sources.list.d/kubernetes.list && \
   chmod 644 /etc/apt/sources.list.d/kubernetes.list && \
   apt update && \
   apt install -y kubectl
 
 # Installing the CNPG Plugin
-RUN wget https://github.com/cloudnative-pg/cloudnative-pg/releases/download/v1.24.0/kubectl-cnpg_1.24.0_linux_x86_64.deb  && \
-  dpkg -i kubectl-cnpg_1.24.0_linux_x86_64.deb
+RUN wget https://github.com/cloudnative-pg/cloudnative-pg/releases/download/v1.25.0/kubectl-cnpg_1.25.0_linux_x86_64.deb  && \
+  dpkg -i kubectl-cnpg_1.25.0_linux_x86_64.deb
 
 # Installing OpenTofu
 RUN install -m 0755 -d /etc/apt/keyrings && \

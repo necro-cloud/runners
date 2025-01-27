@@ -6,7 +6,7 @@ GH_TOKEN=$GH_TOKEN
 
 # Generate a name for the runner.
 RUNNER_SUFFIX=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 5 | head -n 1)
-RUNNER_NAME="photoatom-runner-${RUNNER_SUFFIX}"
+RUNNER_NAME="${GH_RUNNER_NAME_PATTERN}-${RUNNER_SUFFIX}"
 
 # Fetch token for registering the runner.
 REG_TOKEN=$(curl -L \
@@ -19,7 +19,7 @@ REG_TOKEN=$(curl -L \
 
 # Register the runner.
 cd /home/docker/actions-runner
-./config.sh --unattended --url https://github.com/${GH_ORG} --token ${REG_TOKEN} --name ${RUNNER_NAME} --labels photoatom
+./config.sh --unattended --url https://github.com/${GH_ORG} --token ${REG_TOKEN} --name ${RUNNER_NAME} --labels "${GH_LABELS}"
 
 # Function for cleaning up the runner.
 cleanup() {
