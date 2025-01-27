@@ -32,3 +32,4 @@ jobs:
       build_path: .
       repository: necronizerslab
     secrets: inherit
+
