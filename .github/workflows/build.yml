@@ -24,7 +24,7 @@ on:
 jobs:
   build_push_image:
     name: Building and storing PhotoAtom Runner Docker Image
-    uses: PhotoAtom/automations/.github/workflows/build-docker-image.yml@feature/22/secret-select
+    uses: PhotoAtom/automations/.github/workflows/build-docker-image.yml@main
     with:
       dev_version_name: development
       image_name: runner
