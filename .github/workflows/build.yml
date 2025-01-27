@@ -24,10 +24,11 @@ on:
 jobs:
   build_push_image:
     name: Building and storing PhotoAtom Runner Docker Image
-    uses: PhotoAtom/automations/.github/workflows/build-docker-image.yml@main
+    uses: PhotoAtom/automations/.github/workflows/build-docker-image.yml@feature/22/secret-select
     with:
       dev_version_name: dev
       image_name: runner
       image_proper_name: PhotoAtom Runner
       build_path: .
+      repository: necronizerslab
     secrets: inherit
