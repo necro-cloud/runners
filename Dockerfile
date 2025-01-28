@@ -36,7 +36,8 @@ RUN apt install -y --no-install-recommends \
   libicu-dev \
   apt-transport-https \
   ca-certificates \
-  gnupg 
+  gnupg \
+  openjdk-21-jdk
 
 # Installing NodeJS
 RUN mkdir -p ${NVM_DIR} && \

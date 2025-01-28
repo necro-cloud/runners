@@ -1,6 +1,6 @@
 services:
   runners:
-    image: vhkhatri/runner:0.18.19
+    image: quay.io/necronizerslab/runner:0.21.22
     env_file:
       - runner.env
     networks:
