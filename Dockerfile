@@ -13,10 +13,6 @@ ENV GH_RUNNER_NAME_PATTERN=""
 ENV GH_TOKEN=""
 ENV GH_LABELS=""
 
-# NVM Variables
-ENV NVM_DIR /usr/local/nvim
-ENV NODE_VERSION v23.6.1
-
 # Update and upgrade repositories and create user docker
 RUN apt update -y && \
   apt upgrade -y && \
@@ -36,17 +32,8 @@ RUN apt install -y --no-install-recommends \
   libicu-dev \
   apt-transport-https \
   ca-certificates \
-  gnupg 
-
-# Installing NodeJS
-RUN mkdir -p ${NVM_DIR} && \
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash && \
-  /bin/bash -c "source $NVM_DIR/nvm.sh && nvm install $NODE_VERSION && nvm use --delete-prefix $NODE_VERSION"
-
-ENV NODE_PATH $NVM_DIR/versions/node/${NODE_VERSION}/bin
-ENV PATH      $NODE_PATH:$PATH
-
-RUN node --version
+  gnupg \
+  openjdk-21-jdk
 
 # Installing kubectl
 RUN curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
