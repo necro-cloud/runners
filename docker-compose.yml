@@ -1,6 +1,6 @@
 services:
   runners:
-    image: quay.io/necronizerslab/runner:0.21.22
+    image: quay.io/necronizerslab/runner:0.23.24
     env_file:
       - runner.env
     networks:
