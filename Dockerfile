@@ -32,20 +32,11 @@ RUN apt install -y --no-install-recommends \
   libicu-dev \
   apt-transport-https \
   ca-certificates \
-  gnupg \
-  openjdk-21-jdk
+  gnupg
 
 # Installing kubectl
-RUN curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
-  chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
-  echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | tee /etc/apt/sources.list.d/kubernetes.list && \
-  chmod 644 /etc/apt/sources.list.d/kubernetes.list && \
-  apt update && \
-  apt install -y kubectl
-
-# Installing the CNPG Plugin
-RUN wget https://github.com/cloudnative-pg/cloudnative-pg/releases/download/v1.25.0/kubectl-cnpg_1.25.0_linux_x86_64.deb  && \
-  dpkg -i kubectl-cnpg_1.25.0_linux_x86_64.deb
+RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
+  install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 # Installing OpenTofu
 RUN install -m 0755 -d /etc/apt/keyrings && \
@@ -59,11 +50,6 @@ RUN install -m 0755 -d /etc/apt/keyrings && \
   chmod a+r /etc/apt/sources.list.d/opentofu.list && \
   apt update && \
   apt install -y tofu
-
-# Installing MinIO CLI
-RUN curl https://dl.min.io/client/mc/release/linux-amd64/mc \
-  -o /usr/local/bin/mc && \
-  chmod +x /usr/local/bin/mc
 
 # Download the runner package and extract it
 RUN cd /home/docker && mkdir actions-runner && cd actions-runner && \

@@ -1,6 +1,6 @@
 services:
   runners:
-    image: quay.io/necronizerslab/runner:0.23.24
+    image: quay.io/necronizerslab/runner:0.25.26
     env_file:
       - runner.env
     networks:
@@ -10,4 +10,3 @@ networks:
   k3d_network:
     name: k3d-photoatom
     external: true
-

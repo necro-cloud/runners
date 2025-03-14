@@ -23,12 +23,3 @@ jobs:
       - name: Run KubeCTL Commands to check communication with the local K3d cluster
         run: |
           kubectl get ns
-
-      - name: Check if OpenTofu is installed or not
-        run: tofu --version
-
-      - name: Check for packages installed
-        run: |
-          echo "KubeCTL CNPG Plugin: $(kubectl cnpg version)"
-          echo "MinIO CLI: $(mc --version)"
-
