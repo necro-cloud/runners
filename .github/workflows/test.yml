@@ -6,7 +6,7 @@ on:
 jobs:
   test_communication:
     name: Testing Communication with Self Hosted K3d Cluster
-    runs-on: [self-hosted, linux, photoatom]
+    runs-on: [self-hosted, linux, cloud]
     env:
       KUBECONFIG: '/tmp/k3d/config.yml'
       KUBECONFIG_FOLDER: '/tmp/k3d'
