@@ -1,15 +1,15 @@
-name: Test Communication with Self Hosted K3d Cluster
+name: Test Communication with Self Hosted Kubernetes Cluster
 
 on:
   workflow_dispatch:
 
 jobs:
   test_communication:
-    name: Testing Communication with Self Hosted K3d Cluster
+    name: Testing Communication with Self Hosted Kubernetes Cluster
     runs-on: [self-hosted, linux, cloud]
     env:
-      KUBECONFIG: '/tmp/k3d/config.yml'
-      KUBECONFIG_FOLDER: '/tmp/k3d'
+      KUBECONFIG: '/tmp/kubernetes/config.yml'
+      KUBECONFIG_FOLDER: '/tmp/kubernetes'
     steps:
       - name: Create and save KubeConfig file
         run: |
@@ -20,6 +20,5 @@ jobs:
           # Save the KubeConfig file
           echo '${{ secrets.KUBECONFIG }}' >> ${{ env.KUBECONFIG }}
 
-      - name: Run KubeCTL Commands to check communication with the local K3d cluster
-        run: |
-          kubectl get ns
+      - name: Run KubeCTL Commands to check communication with the local Kubernetes cluster
+        run: kubectl get ns
