@@ -24,11 +24,11 @@ on:
 jobs:
   build_push_image:
     name: Building and storing PhotoAtom Runner Docker Image
-    uses: PhotoAtom/automations/.github/workflows/build-docker-image.yml@main
+    uses: necro-cloud/automations/.github/workflows/build-docker-image.yml@main
     with:
       dev_version_name: development
       image_name: runner
-      image_proper_name: PhotoAtom Runner
+      image_proper_name: Self Hosted GitHub Runner
       build_path: .
       repository: necronizerslab
     secrets:
