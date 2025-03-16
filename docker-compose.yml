@@ -8,5 +8,5 @@ services:
 
 networks:
   k3d_network:
-    name: k3d-photoatom
+    name: k3d-cloud
     external: true
